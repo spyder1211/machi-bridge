@@ -1,11 +1,21 @@
-import { municipalities, services, budgetSections, categories } from './data'
-
-console.log(`データ読み込み完了: 自治体=${municipalities.length}, サービス=${services.length}, 予算款=${budgetSections.length}, カテゴリ=${categories.length}`)
+import { useState } from 'react'
+import Header from './components/Header'
 
 function App() {
+  const [activeRole, setActiveRole] = useState('company')
+
+  const labels = {
+    company: '企業ダッシュボード (実装予定)',
+    municipality: '自治体ダッシュボード (実装予定)',
+    council: '議員ダッシュボード (実装予定)',
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800">
-      <h1 className="text-2xl font-bold p-8">まちブリッジ</h1>
+      <Header activeRole={activeRole} onRoleChange={setActiveRole} />
+      <main className="max-w-7xl mx-auto px-4 py-8">
+        <p className="text-lg text-slate-500">{labels[activeRole]}</p>
+      </main>
     </div>
   )
 }
