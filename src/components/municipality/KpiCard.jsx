@@ -1,10 +1,16 @@
 import Badge from '../ui/Badge'
 import ProgressBar from '../ui/ProgressBar'
+import AdoptionBadge from '../ui/AdoptionBadge'
+import { services } from '../../data'
 
 export default function KpiCard({ issue }) {
   const priorityIndicator = issue.priority === 'high'
     ? { icon: '🔴', label: '高' }
     : { icon: '🟡', label: '中' }
+
+  const adoptedService = issue.adoptedServiceId
+    ? services.find((s) => s.id === issue.adoptedServiceId)
+    : null
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5 min-w-[240px] flex-1 transition-shadow hover:shadow-lg">
@@ -18,11 +24,18 @@ export default function KpiCard({ issue }) {
         label={issue.kpiLabel}
         current={issue.kpiCurrent}
         target={issue.kpiTarget}
+        showAchievement
       />
       <div className="flex flex-wrap gap-1.5 mt-3">
+        <AdoptionBadge status={issue.adoptionStatus} />
         <Badge label={issue.category.name} color={getCategoryColor(issue.category.id)} />
         <Badge label={issue.budgetSection.name} color="#64748b" />
       </div>
+      {adoptedService && (
+        <p className="text-xs text-green-600 mt-2 truncate">
+          → {adoptedService.title}
+        </p>
+      )}
     </div>
   )
 }

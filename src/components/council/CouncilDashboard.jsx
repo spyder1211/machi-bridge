@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { municipalities, budgetSections, categories } from '../../data'
+import AchievementSummary from '../ui/AchievementSummary'
 import StatsCards from './StatsCards'
 import BudgetIssueMap from './BudgetIssueMap'
 
@@ -60,6 +61,8 @@ export default function CouncilDashboard() {
           </div>
         </div>
       </div>
+
+      <AchievementSummary issues={muni.issues} />
 
       <StatsCards />
 

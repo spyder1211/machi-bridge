@@ -1,6 +1,7 @@
 import { services, budgetSections } from '../../data'
 import Badge from '../ui/Badge'
 import ProgressBar from '../ui/ProgressBar'
+import AdoptionBadge from '../ui/AdoptionBadge'
 import { useToast } from '../ui/Toast'
 
 export default function BudgetIssueMap({ issues }) {
@@ -47,6 +48,7 @@ export default function BudgetIssueMap({ issues }) {
                         label={`優先度: ${priorityLabels[issue.priority]}`}
                         color={priorityColors[issue.priority]}
                       />
+                      <AdoptionBadge status={issue.adoptionStatus} />
                     </div>
 
                     <div className="mb-4">
@@ -54,6 +56,7 @@ export default function BudgetIssueMap({ issues }) {
                         current={issue.kpiCurrent}
                         target={issue.kpiTarget}
                         label={issue.kpiLabel}
+                        showAchievement
                       />
                     </div>
 
@@ -63,19 +66,29 @@ export default function BudgetIssueMap({ issues }) {
                           解決策の選択肢:
                         </p>
                         <div className="space-y-2">
-                          {matched.map((svc) => (
-                            <div
-                              key={svc.id}
-                              className="bg-slate-50 rounded-lg p-3"
-                            >
-                              <p className="text-sm font-semibold text-slate-700">
-                                {svc.title}
-                              </p>
-                              <p className="text-xs text-slate-500 mt-0.5">
-                                {svc.description.slice(0, 80)}...
-                              </p>
-                            </div>
-                          ))}
+                          {matched.map((svc) => {
+                            const isAdopted = issue.adoptedServiceId === svc.id
+                            return (
+                              <div
+                                key={svc.id}
+                                className={`rounded-lg p-3 ${
+                                  isAdopted ? 'bg-green-50 border border-green-300' : 'bg-slate-50'
+                                }`}
+                              >
+                                <div className="flex items-center gap-2">
+                                  <p className="text-sm font-semibold text-slate-700">
+                                    {svc.title}
+                                  </p>
+                                  {isAdopted && (
+                                    <span className="text-xs font-medium text-green-700 bg-green-200 px-1.5 py-0.5 rounded">導入中</span>
+                                  )}
+                                </div>
+                                <p className="text-xs text-slate-500 mt-0.5">
+                                  {svc.description.slice(0, 80)}...
+                                </p>
+                              </div>
+                            )
+                          })}
                         </div>
                         <button
                           className="mt-3 text-sm text-teal-600 hover:text-teal-800 font-medium"

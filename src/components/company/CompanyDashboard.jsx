@@ -48,6 +48,7 @@ export default function CompanyDashboard() {
   // Summary data
   const uniqueMuniCount = new Set(filteredMatches.map((m) => m.municipality.id)).size
   const issueCount = filteredMatches.length
+  const adoptedCount = filteredMatches.filter((m) => m.issue.adoptionStatus === 'adopted').length
   const budgetNames = [...new Set(service.budgetSections.map((b) => b.name))].join('、')
 
   return (
@@ -56,9 +57,10 @@ export default function CompanyDashboard() {
       <p className="text-sm text-slate-500 mb-6">{service.title}</p>
 
       {/* Summary cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <SummaryCard value={uniqueMuniCount} label="マッチ自治体数" icon="🏛️" />
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <SummaryCard value={uniqueMuniCount} label="マッチ自治体" icon="🏛️" />
         <SummaryCard value={issueCount} label="対象課題数" icon="📋" />
+        <SummaryCard value={adoptedCount} label="導入済み" icon="✅" />
         <SummaryCard value={budgetNames} label="カバー予算款" icon="💰" />
       </div>
 

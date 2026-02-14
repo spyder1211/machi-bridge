@@ -1,5 +1,6 @@
 import Badge from '../ui/Badge'
 import ProgressBar from '../ui/ProgressBar'
+import AdoptionBadge from '../ui/AdoptionBadge'
 import { useToast } from '../ui/Toast'
 
 const priorityMap = {
@@ -12,6 +13,13 @@ export default function MatchingCard({ municipality, issue, service, isSelected,
   const { showToast } = useToast()
   const pri = priorityMap[issue.priority] || priorityMap.medium
 
+  const ctaByStatus = {
+    adopted: { label: '導入済み', className: 'text-green-600 font-medium', disabled: true },
+    considering: { label: 'フォローアップする →', className: 'text-yellow-600 hover:text-yellow-800 font-medium', disabled: false },
+    none: { label: 'この自治体に提案する →', className: 'text-teal-600 hover:text-teal-800 font-medium', disabled: false },
+  }
+  const cta = ctaByStatus[issue.adoptionStatus] || ctaByStatus.none
+
   return (
     <div
       onClick={onClick}
@@ -21,10 +29,11 @@ export default function MatchingCard({ municipality, issue, service, isSelected,
     >
       {/* Municipality info */}
       <div className="flex items-center justify-between mb-2">
-        <div>
+        <div className="flex items-center gap-2">
           <span className="font-bold text-slate-800">{municipality.name}</span>
-          <span className="text-sm text-slate-500 ml-2">{municipality.prefecture}</span>
-          <span className="text-sm text-slate-400 ml-2">人口 {municipality.population}万人</span>
+          <span className="text-sm text-slate-500">{municipality.prefecture}</span>
+          <span className="text-sm text-slate-400">人口 {municipality.population}万人</span>
+          <AdoptionBadge status={issue.adoptionStatus} />
         </div>
         <span style={{ color: pri.color }} className="text-sm font-medium">
           {pri.label}
@@ -43,21 +52,25 @@ export default function MatchingCard({ municipality, issue, service, isSelected,
 
       {/* KPI */}
       <div className="mb-3">
-        <ProgressBar current={issue.kpiCurrent} target={issue.kpiTarget} label={issue.kpiLabel} />
+        <ProgressBar current={issue.kpiCurrent} target={issue.kpiTarget} label={issue.kpiLabel} showAchievement />
       </div>
 
       {/* Service + CTA */}
       <div className="flex items-center justify-between">
         <span className="text-xs text-slate-400">マッチサービス: {service.title}</span>
-        <button
-          onClick={(e) => {
-            e.stopPropagation()
-            showToast(`${municipality.name}への提案を送信しました`)
-          }}
-          className="text-sm text-teal-600 hover:text-teal-800 font-medium"
-        >
-          この自治体に提案する →
-        </button>
+        {cta.disabled ? (
+          <span className={`text-sm ${cta.className}`}>{cta.label}</span>
+        ) : (
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              showToast(`${municipality.name}への提案を送信しました`)
+            }}
+            className={`text-sm ${cta.className}`}
+          >
+            {cta.label}
+          </button>
+        )}
       </div>
     </div>
   )

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import ProgressBar from '../ui/ProgressBar'
 import Badge from '../ui/Badge'
+import AdoptionBadge from '../ui/AdoptionBadge'
 import { useToast } from '../ui/Toast'
 import { services } from '../../data'
 
@@ -41,6 +42,7 @@ function AccordionItem({ issue, isOpen, onToggle }) {
         <div className="flex items-center gap-3">
           <span className="text-sm">{priorityIndicator}</span>
           <span className="font-semibold text-slate-800">{issue.title}</span>
+          <AdoptionBadge status={issue.adoptionStatus} />
         </div>
         <span className="text-slate-400 text-lg">{isOpen ? '▲' : '▼'}</span>
       </button>
@@ -54,6 +56,7 @@ function AccordionItem({ issue, isOpen, onToggle }) {
               label={issue.kpiLabel}
               current={issue.kpiCurrent}
               target={issue.kpiTarget}
+              showAchievement
             />
           </div>
 
@@ -68,34 +71,52 @@ function AccordionItem({ issue, isOpen, onToggle }) {
                 🔗 マッチするサービス ({matchingServices.length}件)
               </h4>
               <div className="space-y-3">
-                {matchingServices.map((svc) => (
-                  <div
-                    key={svc.id}
-                    className="bg-slate-50 rounded-lg p-4 border border-slate-200"
-                  >
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1 min-w-0 mr-4">
-                        <p className="font-medium text-slate-800 text-sm">{svc.title}</p>
-                        <p className="text-xs text-slate-500 mt-0.5">{svc.companyName}</p>
-                        <p className="text-sm text-slate-600 mt-1 line-clamp-2">{svc.description}</p>
-                      </div>
-                      <div className="flex flex-col gap-2 flex-shrink-0">
-                        <button
-                          onClick={() => showToast(`「${svc.title}」の詳細ページへ遷移します（MVP）`)}
-                          className="text-xs px-3 py-1.5 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 text-slate-700 transition-colors"
-                        >
-                          詳細を見る
-                        </button>
-                        <button
-                          onClick={() => showToast(`「${svc.companyName}」にオファーを送信しました（MVP）`)}
-                          className="text-xs px-3 py-1.5 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
-                        >
-                          オファーを送る
-                        </button>
+                {matchingServices.map((svc) => {
+                  const isAdopted = issue.adoptedServiceId === svc.id
+                  return (
+                    <div
+                      key={svc.id}
+                      className={`rounded-lg p-4 border ${
+                        isAdopted
+                          ? 'bg-green-50 border-green-300'
+                          : 'bg-slate-50 border-slate-200'
+                      }`}
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1 min-w-0 mr-4">
+                          <div className="flex items-center gap-2">
+                            <p className="font-medium text-slate-800 text-sm">{svc.title}</p>
+                            {isAdopted && (
+                              <span className="text-xs font-medium text-green-700 bg-green-200 px-1.5 py-0.5 rounded">導入中</span>
+                            )}
+                          </div>
+                          <p className="text-xs text-slate-500 mt-0.5">{svc.companyName}</p>
+                          <p className="text-sm text-slate-600 mt-1 line-clamp-2">{svc.description}</p>
+                        </div>
+                        <div className="flex flex-col gap-2 flex-shrink-0">
+                          <button
+                            onClick={() => showToast(`「${svc.title}」の詳細ページへ遷移します（MVP）`)}
+                            className="text-xs px-3 py-1.5 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 text-slate-700 transition-colors"
+                          >
+                            詳細を見る
+                          </button>
+                          {isAdopted ? (
+                            <span className="text-xs px-3 py-1.5 bg-green-600 text-white rounded-lg text-center">
+                              導入済み
+                            </span>
+                          ) : (
+                            <button
+                              onClick={() => showToast(`「${svc.companyName}」にオファーを送信しました（MVP）`)}
+                              className="text-xs px-3 py-1.5 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
+                            >
+                              オファーを送る
+                            </button>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             </div>
           )}

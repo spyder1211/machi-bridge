@@ -1,5 +1,6 @@
 import { municipalities } from '../../data'
 import PlanHeader from './PlanHeader'
+import AchievementSummary from '../ui/AchievementSummary'
 import KpiCard from './KpiCard'
 import IssueAccordion from './IssueAccordion'
 import CategoryChart from './CategoryChart'
@@ -19,6 +20,8 @@ export default function MunicipalityDashboard() {
       </div>
 
       <PlanHeader planName={muni.planName} direction={muni.direction} />
+
+      <AchievementSummary issues={muni.issues} />
 
       <div className="mb-6">
         <h2 className="text-lg font-bold text-slate-800 mb-3">📈 KPI概況</h2>
