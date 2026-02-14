@@ -7,7 +7,7 @@ export default function KpiCard({ issue }) {
     : { icon: '🟡', label: '中' }
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5 min-w-[240px] flex-1">
+    <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5 min-w-[240px] flex-1 transition-shadow hover:shadow-lg">
       <div className="flex items-center justify-between mb-3">
         <h3 className="text-sm font-semibold text-slate-800 truncate mr-2">{issue.title}</h3>
         <span className="text-xs whitespace-nowrap">

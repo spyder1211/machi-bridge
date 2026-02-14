@@ -10,7 +10,7 @@ export default function MunicipalitySidebar({ municipality }) {
   if (!municipality) return null
 
   return (
-    <div className="bg-white rounded-xl shadow-sm p-5">
+    <div className="bg-white rounded-xl shadow-sm p-5 transition-shadow hover:shadow-lg">
       <h2 className="text-lg font-bold text-slate-800 mb-1">{municipality.name}</h2>
       <p className="text-sm text-slate-500 mb-4">{municipality.prefecture} ・ 人口 {municipality.population}万人</p>
 

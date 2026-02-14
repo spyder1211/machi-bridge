@@ -32,6 +32,10 @@ export default function MunicipalityDashboard() {
       <IssueAccordion issues={muni.issues} />
 
       <CategoryChart issues={muni.issues} />
+
+      <p className="text-xs text-slate-400 mt-8 text-center">
+        ℹ️ この情報はAIにより自治体の基本計画から自動抽出されたものです
+      </p>
     </div>
   )
 }

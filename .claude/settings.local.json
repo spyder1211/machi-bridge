@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(*)",
+      "mcp__plugin_*",
+      "mcp__plugin_github_github__get_me",
+      "mcp__plugin_github_github__create_repository"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(git push --force:*)",
+      "Bash(git push * --force:*)",
+      "Bash(git clean -f:*)",
+      "Bash(git branch -D:*)"
+    ],
+    "ask": []
+  },
+  "enabledMcpjsonServers": [
+    "laravel-boost"
+  ]
+}

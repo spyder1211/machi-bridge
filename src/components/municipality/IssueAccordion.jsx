@@ -33,7 +33,7 @@ function AccordionItem({ issue, isOpen, onToggle }) {
     : '🟡 中'
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+    <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden transition-shadow hover:shadow-lg">
       <button
         onClick={onToggle}
         className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50 transition-colors"

@@ -90,6 +90,10 @@ export default function CompanyDashboard() {
           <MunicipalitySidebar municipality={selectedMunicipality} />
         </div>
       </div>
+
+      <p className="text-xs text-slate-400 mt-8 text-center">
+        ℹ️ この情報はAIにより自治体の基本計画から自動抽出されたものです
+      </p>
     </div>
   )
 }

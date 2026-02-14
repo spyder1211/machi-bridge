@@ -15,7 +15,7 @@ export default function MatchingCard({ municipality, issue, service, isSelected,
   return (
     <div
       onClick={onClick}
-      className={`bg-white rounded-xl shadow-sm p-5 cursor-pointer transition-all hover:shadow-md ${
+      className={`bg-white rounded-xl shadow-sm p-5 cursor-pointer transition-all hover:shadow-lg ${
         isSelected ? 'border-l-4 border-teal-500' : 'border-l-4 border-transparent'
       }`}
     >

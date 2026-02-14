@@ -21,7 +21,7 @@ export default function StatsCards() {
   return (
     <div className="grid grid-cols-4 gap-4 mb-6">
       {cards.map((c) => (
-        <div key={c.label} className={`rounded-xl p-5 ${c.color}`}>
+        <div key={c.label} className={`rounded-xl p-5 transition-shadow hover:shadow-lg ${c.color}`}>
           <p className="text-sm font-medium opacity-80">{c.label}</p>
           <p className="text-3xl font-bold mt-1">{c.value}</p>
         </div>

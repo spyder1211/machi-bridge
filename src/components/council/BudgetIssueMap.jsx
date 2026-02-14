@@ -39,7 +39,7 @@ export default function BudgetIssueMap({ issues }) {
                 return (
                   <div
                     key={issue.id}
-                    className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm"
+                    className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm transition-shadow hover:shadow-lg"
                   >
                     <div className="flex items-center gap-2 mb-3">
                       <h4 className="font-semibold text-slate-800">{issue.title}</h4>
