@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Header from './components/Header'
 import { ToastProvider } from './components/ui/Toast'
 import CompanyDashboard from './components/company/CompanyDashboard'
+import MunicipalityDashboard from './components/municipality/MunicipalityDashboard'
 
 function App() {
   const [activeRole, setActiveRole] = useState('company')
@@ -17,7 +18,8 @@ function App() {
         <Header activeRole={activeRole} onRoleChange={setActiveRole} />
         <main className="max-w-7xl mx-auto px-4 py-8">
           {activeRole === 'company' && <CompanyDashboard />}
-          {activeRole !== 'company' && (
+          {activeRole === 'municipality' && <MunicipalityDashboard />}
+          {activeRole === 'council' && (
             <p className="text-lg text-slate-500">{labels[activeRole]}</p>
           )}
         </main>
