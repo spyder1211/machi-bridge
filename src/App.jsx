@@ -3,6 +3,7 @@ import Header from './components/Header'
 import { ToastProvider } from './components/ui/Toast'
 import CompanyDashboard from './components/company/CompanyDashboard'
 import MunicipalityDashboard from './components/municipality/MunicipalityDashboard'
+import CouncilDashboard from './components/council/CouncilDashboard'
 
 function App() {
   const [activeRole, setActiveRole] = useState('company')
@@ -19,9 +20,7 @@ function App() {
         <main className="max-w-7xl mx-auto px-4 py-8">
           {activeRole === 'company' && <CompanyDashboard />}
           {activeRole === 'municipality' && <MunicipalityDashboard />}
-          {activeRole === 'council' && (
-            <p className="text-lg text-slate-500">{labels[activeRole]}</p>
-          )}
+          {activeRole === 'council' && <CouncilDashboard />}
         </main>
       </div>
     </ToastProvider>
